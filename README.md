@@ -25,7 +25,7 @@ R-type instructions take two source registers and one destination register. Sour
 | Instruction | Type | Opcode | funct3 | funct7 | Description |
 |:-----------:|:----:|:------:|:------:|:------:|:-----------:|
 | `lw` | I | `0000011` | `010` | *none* |The 12 bit constant is added to the base address stored in the source register. The data memory is addressed by the sum and the value stored there is loaded into the destination register. | 
-| `sw` | S | '0100011` | `010` | *none* | The memory address is the sum of the base address stored in the source register and the 12 bit constant. `sw` writes the contents of the destination register to that location. | 
+| `sw` | S | `0100011` | `010` | *none* | The memory address is the sum of the base address stored in the source register and the 12 bit constant. `sw` writes the contents of the destination register to that location. | 
 | `add` | R | `0110011` | `000` |`0000000` | The sum of the values in the two source registers is stored in the destination register. |
 | `sub` | R | `0110011` | `000` | `0100000` |The difference of the values in the two source registers is stored in the destination register. |
 |`or` | R | `0110011` | `110` | `0000000` |The bitwise or of the two source registers is stored in the destination register. |
