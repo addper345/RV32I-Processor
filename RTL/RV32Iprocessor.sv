@@ -1,6 +1,7 @@
+`timescale 1ns/1ns
 module RV32Iprocessor(input logic CLK, output logic debug);
 
-	logic RegWrite, ALUSrc, MemWrite, ResultSrc, PCSrc;
+	logic RegWrite, ALUSrc, MemWrite, ResultSrc, PCSrc, Reset;
 	logic[31:0] PCCur, PCNext, Instr, Result, SrcA, SrcB, RegB, ALUResult, Debug, 
 				ImmExt, PCPlus4, PCTarget, WriteData, ReadData;
 	logic[2:0] ALUControl;
@@ -13,10 +14,16 @@ module RV32Iprocessor(input logic CLK, output logic debug);
 	assign Result = ResultSrc ? ReadData : ALUResult;
 	
 	
+	initial begin 
+		Reset = 1;
+		#1
+		Reset = 0;
+	end
+	
 	assign PCTarget = PCCur+ImmExt;
 	assign PCPlus4 = PCCur+4;
 	assign PCNext = PCSrc ? PCTarget : PCPlus4; 
-	PC program_counter(PCNext, CLK, PCCur);
+	PC program_counter(PCNext, CLK, Reset, PCCur);
 	
 	control_unit control_unit(Instr[6:0], Instr[14:12], Instr[30], Flags[2], 
 		PCSrc, ResultSrc, MemWrite, ALUSrc, RegWrite, ALUControl, ImmSrc);
@@ -24,7 +31,7 @@ module RV32Iprocessor(input logic CLK, output logic debug);
 	instruction_memory instruction_memory(PCCur, Instr);
 	register_file register_file(Instr[19:15], Instr[24:20], Instr[11:7], Result, RegWrite, CLK, SrcA, RegB);
 	ALU alu(SrcA, SrcB, ALUControl, ALUResult, Flags);
-	extend extend(Instr, ImmSrc, ImmExt);
+	extend extend(Instr[31:7], ImmSrc, ImmExt);
 	data_memory data_memory(ALUResult, WriteData, MemWrite, CLK, ReadData);
 endmodule
 
