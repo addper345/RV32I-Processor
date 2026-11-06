@@ -8,11 +8,17 @@ The processor has 32 regsisters each referred to by a number between 0 and 31. I
 ### I-Type Instructions
 I-type instructions have three operands. One source register specified by bits 19:15, one destination register from bits 11:7, and one 12 bit constant from 31:20. 
 
+![Diagram didn't load](docs/images/I-type.png)
+
 ### S/B-Type Instructions
 S and B-type instructions both take two source registers and one 12 bit constant. Source one from 19:15 and source two from 24:20. The difference between them lies in how the bits are swizzled into 31:25 and 11:7. 
 
+![Diagram didn't load](docs/images/S-B-type.png)
+
 ### R-Type Instructions 
 R-type instructions take two source registers and one destination register. Source one and source two are the same as in S/B-type instructions. The destination is stored in bits 11:7.
+
+![Diagram didn't load](docs/images/R-type.png)
 
 ### All Implemented Instructions
 
@@ -29,8 +35,13 @@ R-type instructions take two source registers and one destination register. Sour
 
 ## Microarchitecture
 
+![Diagram didn't load](docs/images/block_diagram.png)
 One the rising edge of a clock cycle, the program counter output signal addresses the instruction memory to produce the next instruction to execute. funct3, funct7, and the opcode are fed to the control unit to determine the instruction type and produce control signals accordingly. The register indices proceed to the register file while the constant is sign extended into a 32 bit word. Depending on the instruction, the register values/constants are fed to the ALU whose output addresses the data memory or writes to the register file. In the case of `beq` the sum of the program counter output and constant is fed back into the program counter to load the next instruction. Otherwise, four is added to the output which addresses in instruction memory on the next rising edge. 
 
 ## How to Contribute
 
 Install [Quartus Prime](https://www.altera.com/products/software-tools/quartus-prime#download) and click on the `.qpf` to build the project. To simulate, open Questa and change the working directory to the project directory in console. Compile all design files and start the simulation in debug mode. 
+
+![Diagram didn't load](docs/images/questa_change_directory.png)
+![Diagram didn't load](docs/images/questa_compile.png)
+![Diagram didn't load](docs/images/start_simulation_debug.png)
