@@ -36,7 +36,7 @@ R-type instructions take two source registers and one destination register. Sour
 ## Microarchitecture
 
 ![Diagram didn't load](docs/images/block_diagram.png)
-One the rising edge of a clock cycle, the program counter output signal addresses the instruction memory to produce the next instruction to execute. funct3, funct7, and the opcode are fed to the control unit to determine the instruction type and produce control signals accordingly. The register indices proceed to the register file while the constant is sign extended into a 32 bit word. Depending on the instruction, the register values/constants are fed to the ALU whose output addresses the data memory or writes to the register file. In the case of `beq` the sum of the program counter output and constant is fed back into the program counter to load the next instruction. Otherwise, four is added to the output which addresses in instruction memory on the next rising edge. 
+On the rising edge of a clock cycle, the program counter output signal addresses the instruction memory to produce the next instruction to execute. funct3, funct7, and the opcode are fed to the control unit to determine the instruction type and produce control signals accordingly. The register indices proceed to the register file while the constant is sign extended into a 32 bit word. Depending on the instruction, the register values/constants are fed to the ALU whose output addresses the data memory or writes to the register file. In the case of `beq` the sum of the program counter output and constant is fed back into the program counter to load the next instruction. Otherwise, four is added to the output which addresses in instruction memory on the next rising edge. 
 
 ## How to Contribute
 
